@@ -54,6 +54,7 @@ class Network_Posts_Widget extends WP_Widget {
     
     	$excluded_sites = (isset($instance['excluded_sites']) ? $instance['excluded_sites'] : '');
     	$title = (isset($instance['title']) ? strip_tags($instance['title']) : '');
+    	$excerpt = (isset($instance['show_excerpt']) ? $instance['show_excerpt'] : false);
     	?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
@@ -63,6 +64,10 @@ class Network_Posts_Widget extends WP_Widget {
             <label for="<?php echo $this->get_field_id('excluded_sites'); ?>"><?php _e('Exclude sites (IDs separated by ,)', 'network_posts_widget'); ?></label><br />
             <input class="widefat" id="<?php echo $this->get_field_id('excluded_sites'); ?>" name="<?php echo $this->get_field_name('excluded_sites'); ?>" type="text" value="<?php echo esc_attr( $excluded_sites ); ?>" />            
         </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('show_excerpt'); ?>"><?php _e('Show excerpt ', 'network_posts_widget'); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('show_excerpt'); ?>" name="<?php echo $this->get_field_name('show_excerpt'); ?>" type="checkbox" value="yes" <?php if($excerpt == 'yes'){ echo 'checked'; } ?> />            
+        </p>
     	<?php 
     }
  
@@ -71,6 +76,7 @@ class Network_Posts_Widget extends WP_Widget {
         $instance = $old_instance;
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['excluded_sites'] = strip_tags($new_instance['excluded_sites']);
+        $instance['show_excerpt'] = $new_instance['show_excerpt'];
         return $instance;
     }
  
@@ -78,6 +84,7 @@ class Network_Posts_Widget extends WP_Widget {
     	extract($args);
     	$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
         $excluded_sites = (isset($instance['excluded_sites']) ? $instance['excluded_sites'] : false);
+        $excerpt = (isset($instance['show_excerpt']) ? $instance['show_excerpt'] : false);
         
         //setup query
         $args = array(
@@ -98,7 +105,9 @@ class Network_Posts_Widget extends WP_Widget {
 		        $network_posts_query->the_post();
 		        echo '<li class="network-posts-li">';
 		        echo '<h3 class="network-posts-heading"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h3>';
-		        echo '<p class="network-posts-excerpt">' . get_the_excerpt() . '</p>';
+		        if($excerpt == 'yes'){
+			        echo '<p class="network-posts-excerpt">' . get_the_excerpt() . '</p>';
+		        }
 		        echo '</li>';
 	        }
 	        wp_reset_postdata();
