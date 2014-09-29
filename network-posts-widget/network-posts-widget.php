@@ -89,8 +89,7 @@ class Network_Posts_Widget extends WP_Widget {
         //setup query
         $args = array(
         	'post_type' => 'post',
-        	'posts_per_page' => 5,
-        	'suppress_filters' => 1
+        	'posts_per_page' => 5
         );
         if($excluded_sites){
         	$excluded_sites_array = explode(',', $excluded_sites);
