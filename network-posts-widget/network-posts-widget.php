@@ -8,7 +8,7 @@
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:       /languages
- * Version: 1.0.0
+ * Version: 0.1
  * Author URI: http://jonathandejong.se
  * TODO: 
  	* Setup better exclude sites option
@@ -17,7 +17,7 @@
 */
 
 
-define( 'NPW_VERSION', '1.0.0' );
+define( 'NPW_VERSION', '0.1' );
 define( 'NPW_PLUGIN_FILE', __FILE__ );
 if ( ! defined( 'NPW_PLUGIN_DIR' ) )
 	define( 'NPW_PLUGIN_DIR', __DIR__ . '/' );
